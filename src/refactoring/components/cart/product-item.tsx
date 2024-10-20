@@ -1,17 +1,15 @@
-import { useCart } from "../../hooks";
-
 import DiscountCondition from "./discount-condition";
 import MaxDiscountStock from "./max-discount-stock";
 
-import { ProductType } from "../../../types";
+import { CartItemType, ProductType } from "../../../types";
 
 interface ProductItemProps {
   product: ProductType;
+  cart: CartItemType[];
+  addToCart: (product: ProductType) => void;
 }
 
-const ProductItem = ({ product }: ProductItemProps) => {
-  const { cart, addToCart } = useCart();
-
+const ProductItem = ({ product, cart, addToCart }: ProductItemProps) => {
   const getRemainingStock = (product: ProductType) => {
     const productItem = cart.find(item => item.product.id === product.id);
     return product.stock - (productItem?.quantity || 0);
