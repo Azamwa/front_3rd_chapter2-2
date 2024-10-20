@@ -16,6 +16,10 @@ export const calculateCartTotal = (cart: CartItem[], selectedCoupon: Coupon | nu
   };
 };
 
-export const updateCartItemQuantity = (cart: CartItem[], productId: string, newQuantity: number): CartItem[] => {
-  return []
+export const updateCartItemQuantity = (
+  cart: CartItem[],
+  productId: string,
+  newQuantity: number
+): CartItem[] => {
+  return [];
 };
