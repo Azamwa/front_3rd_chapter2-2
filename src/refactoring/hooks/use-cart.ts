@@ -1,19 +1,19 @@
 // useCart.ts
 import { useState } from "react";
-import { CartItem, Coupon, Product } from "../../types";
+import { CartItemType, CouponType, ProductType } from "../../types";
 import { calculateCartTotal, updateCartItemQuantity } from "./utils/cart-utils";
 
 export const useCart = () => {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
+  const [cart, setCart] = useState<CartItemType[]>([]);
+  const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
 
-  const addToCart = (product: Product) => {};
+  const addToCart = (product: ProductType) => {};
 
   const removeFromCart = (productId: string) => {};
 
   const updateQuantity = (productId: string, newQuantity: number) => {};
 
-  const applyCoupon = (coupon: Coupon) => {};
+  const applyCoupon = (coupon: CouponType) => {};
 
   const calculateTotal = () => ({
     totalBeforeDiscount: 0,

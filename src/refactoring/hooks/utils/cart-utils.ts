@@ -1,14 +1,14 @@
-import { CartItem, Coupon } from "../../../types";
+import { CartItemType, CouponType } from "../../../types";
 
-export const calculateItemTotal = (item: CartItem) => {
+export const calculateItemTotal = (item: CartItemType) => {
   return 0;
 };
 
-export const getMaxApplicableDiscount = (item: CartItem) => {
+export const getMaxApplicableDiscount = (item: CartItemType) => {
   return 0;
 };
 
-export const calculateCartTotal = (cart: CartItem[], selectedCoupon: Coupon | null) => {
+export const calculateCartTotal = (cart: CartItemType[], selectedCoupon: CouponType | null) => {
   return {
     totalBeforeDiscount: 0,
     totalAfterDiscount: 0,
@@ -17,9 +17,9 @@ export const calculateCartTotal = (cart: CartItem[], selectedCoupon: Coupon | nu
 };
 
 export const updateCartItemQuantity = (
-  cart: CartItem[],
+  cart: CartItemType[],
   productId: string,
-  newQuantity: number
-): CartItem[] => {
+  newQuantity: number,
+): CartItemType[] => {
   return [];
 };
