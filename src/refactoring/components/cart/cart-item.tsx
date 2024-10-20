@@ -19,7 +19,7 @@ const CartItem = ({ cartItem, updateQuantity, removeFromCart }: CartItemProps) =
     return appliedDiscount;
   };
 
-  const isUnUpdatetable = (cartItem: CartItemType, newQuantity: number) => {
+  const isUnUpdatable = (cartItem: CartItemType, newQuantity: number) => {
     const { quantity, product } = cartItem;
     return quantity + product.stock <= newQuantity;
   };
@@ -51,10 +51,10 @@ const CartItem = ({ cartItem, updateQuantity, removeFromCart }: CartItemProps) =
         </button>
         <button
           onClick={() => updateQuantity(cartItem.product.id, cartItem.quantity + 1)}
-          disabled={isUnUpdatetable(cartItem, cartItem.quantity + 1)}
+          disabled={isUnUpdatable(cartItem, cartItem.quantity + 1)}
           className={` px-2 py-1 rounded mr-1 bg-gray-300 
             ${
-              isUnUpdatetable(cartItem, cartItem.quantity + 1)
+              isUnUpdatable(cartItem, cartItem.quantity + 1)
                 ? "text-gray-400"
                 : "text-gray-800 hover:bg-gray-400"
             }`}

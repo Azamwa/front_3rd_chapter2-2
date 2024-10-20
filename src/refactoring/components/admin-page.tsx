@@ -2,16 +2,16 @@ import { useState } from "react";
 import { CouponType, DiscountType, ProductType } from "../../types.ts";
 
 interface AdminPageProps {
-  products: ProductType[];
-  coupons: CouponType[];
+  productList: ProductType[];
+  couponList: CouponType[];
   onProductUpdate: (updatedProduct: ProductType) => void;
   onProductAdd: (newProduct: ProductType) => void;
   onCouponAdd: (newCoupon: CouponType) => void;
 }
 
 export const AdminPage = ({
-  products,
-  coupons,
+  productList,
+  couponList,
   onProductUpdate,
   onProductAdd,
   onCouponAdd,
@@ -75,7 +75,7 @@ export const AdminPage = ({
   };
 
   const handleStockUpdate = (productId: string, newStock: number) => {
-    const updatedProduct = products.find(p => p.id === productId);
+    const updatedProduct = productList.find(product => product.id === productId);
     if (updatedProduct) {
       const newProduct = { ...updatedProduct, stock: newStock };
       onProductUpdate(newProduct);
@@ -84,7 +84,7 @@ export const AdminPage = ({
   };
 
   const handleAddDiscount = (productId: string) => {
-    const updatedProduct = products.find(p => p.id === productId);
+    const updatedProduct = productList.find(product => product.id === productId);
     if (updatedProduct && editingProduct) {
       const newProduct = {
         ...updatedProduct,
@@ -97,7 +97,7 @@ export const AdminPage = ({
   };
 
   const handleRemoveDiscount = (productId: string, index: number) => {
-    const updatedProduct = products.find(p => p.id === productId);
+    const updatedProduct = productList.find(product => product.id === productId);
     if (updatedProduct) {
       const newProduct = {
         ...updatedProduct,
@@ -190,7 +190,7 @@ export const AdminPage = ({
             </div>
           )}
           <div className="space-y-2">
-            {products.map((product, index) => (
+            {productList.map((product, index) => (
               <div
                 key={product.id}
                 data-testid={`product-${index + 1}`}
@@ -366,7 +366,7 @@ export const AdminPage = ({
             <div>
               <h3 className="text-lg font-semibold mb-2">현재 쿠폰 목록</h3>
               <div className="space-y-2">
-                {coupons.map((coupon, index) => (
+                {couponList.map((coupon, index) => (
                   <div
                     key={index}
                     data-testid={`coupon-${index + 1}`}

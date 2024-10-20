@@ -1,6 +1,6 @@
 import { CouponType, ProductType } from "../../../types";
 
-export const initialProducts: ProductType[] = [
+export const initialProductList: ProductType[] = [
   {
     id: "p1",
     name: "상품1",
@@ -27,7 +27,7 @@ export const initialProducts: ProductType[] = [
   },
 ];
 
-export const initialCoupons: CouponType[] = [
+export const initialCouponList: CouponType[] = [
   {
     name: "5000원 할인 쿠폰",
     code: "AMOUNT5000",
