@@ -7,7 +7,30 @@ export const useCart = () => {
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
 
-  const addToCart = (product: ProductType) => {};
+  function addToCart(product: ProductType) {
+    const cartItemIndex = cart.findIndex(cartItem => cartItem.product.id === product.id);
+    const hasCartItem = cartItemIndex !== -1;
+    const hasCartStock = hasCartItem && cart[cartItemIndex].product.stock > 0;
+
+    if (hasCartItem && hasCartStock) {
+      addCartItemQuantity(cartItemIndex, product);
+    } else {
+      addCartItem(product);
+    }
+  }
+
+  function addCartItemQuantity(cartItemIndex: number, product: ProductType) {
+    setCart(prev =>
+      prev.with(cartItemIndex, {
+        product: { ...product, stock: product.stock - 1 },
+        quantity: prev[cartItemIndex].quantity + 1,
+      }),
+    );
+  }
+
+  function addCartItem(product: ProductType) {
+    setCart(prev => prev.concat({ product: { ...product }, quantity: 1 }));
+  }
 
   const removeFromCart = (productId: string) => {};
 
