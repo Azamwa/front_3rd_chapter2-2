@@ -5,16 +5,16 @@ import MaxDiscountStock from "./max-discount-stock";
 
 import { ProductType } from "../../../types";
 
-interface CartItemProps {
+interface ProductItemProps {
   product: ProductType;
 }
 
-const CartItem = ({ product }: CartItemProps) => {
+const ProductItem = ({ product }: ProductItemProps) => {
   const { cart, addToCart } = useCart();
 
   const getRemainingStock = (product: ProductType) => {
-    const cartItem = cart.find(item => item.product.id === product.id);
-    return product.stock - (cartItem?.quantity || 0);
+    const productItem = cart.find(item => item.product.id === product.id);
+    return product.stock - (productItem?.quantity || 0);
   };
 
   return (
@@ -48,4 +48,4 @@ const CartItem = ({ product }: CartItemProps) => {
   );
 };
 
-export default CartItem;
+export default ProductItem;
