@@ -23,10 +23,10 @@ const ProductItem = ({ product, cart, addToCart }: ProductItemProps) => {
       </div>
       <MaxDiscountStock product={product} getRemainingStock={getRemainingStock} />
 
-      {product.discounts.length > 0 && (
+      {product.discountList.length > 0 && (
         <ul className="list-disc list-inside text-sm text-gray-500 mb-2">
-          {product.discounts.map((discount, index) => (
-            <DiscountCondition discount={discount} key={discount.quantity + "" + index} />
+          {product.discountList.map((discount, index) => (
+            <DiscountCondition discount={discount} key={`${discount.quantity}${index}`} />
           ))}
         </ul>
       )}
