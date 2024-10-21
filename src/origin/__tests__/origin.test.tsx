@@ -1,9 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
-import { CartPage } from "../components/CartPage";
-import { CouponType, ProductType } from "../../types";
-import { AdminPage } from "../components/AdminPage.tsx";
 import { useState } from "react";
+
+import { CartPage } from "../components/CartPage";
+import { AdminPage } from "../components/AdminPage.tsx";
+
+import { CouponType, ProductType } from "../../types";
 
 const mockProductList: ProductType[] = [
   {
