@@ -13,7 +13,7 @@ const ApplyCoupon = ({ couponList, applyCoupon, selectedCoupon }: ApplyCouponPro
   return (
     <>
       <CouponSelect applyCoupon={applyCoupon} couponList={couponList} />
-      <SelectedCoupon selectedCoupon={selectedCoupon} />
+      {selectedCoupon !== null && <SelectedCoupon selectedCoupon={selectedCoupon} />}
     </>
   );
 };
