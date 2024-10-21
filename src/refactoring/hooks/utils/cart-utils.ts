@@ -71,6 +71,7 @@ export const updateCartItemQuantity = (
   productId: string,
   newQuantity: number,
 ): CartItemType[] => {
+  // 이 부분은 테스트를 통과 하기 위해 만들었지만, 굳이 removeCartItem은 따로 export해도 괜찮을 것 같습니다.
   if (newQuantity === 0) {
     return removeCartItem(cart, productId);
   }
@@ -78,7 +79,7 @@ export const updateCartItemQuantity = (
   return getUpdateQuantity(cart, productId, newQuantity);
 };
 
-const removeCartItem = (cart: CartItemType[], productId: string) => {
+export const removeCartItem = (cart: CartItemType[], productId: string) => {
   return cart.filter(cartItem => cartItem.product.id !== productId);
 };
 
