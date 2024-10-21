@@ -3,7 +3,7 @@ import { useCouponList, useProductList } from "./hooks/index.ts";
 import { initialCouponList, initialProductList } from "./hooks/utils/initial-data";
 
 import { CartPage } from "./components/cart/cart-page.tsx";
-import { AdminPage } from "./components/admin-page.tsx";
+import { AdminPage } from "./components/admin/admin-page.tsx";
 
 const App = () => {
   const { productList, updateProduct, addProduct } = useProductList(initialProductList);
