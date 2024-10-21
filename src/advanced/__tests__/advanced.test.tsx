@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { describe, expect, test } from "vitest";
-import { act, fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, renderHook, screen, within } from "@testing-library/react";
 import { CartPage } from "../../refactoring/components/cart/cart-page";
 import { AdminPage } from "../../refactoring/components/admin/admin-page";
 import { CouponType, ProductType } from "../../types";
+import useNewProduct from "../../refactoring/hooks/use-new-product";
 
 const mockProductList: ProductType[] = [
   {
@@ -237,6 +238,66 @@ describe("advanced > ", () => {
 
     test("새로운 hook 함수르 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
       expect(true).toBe(false);
+    });
+  });
+
+  describe("useNewProduct", () => {
+    test("생성할 제품의 속성을 변경할 수 있어야 합니다.", () => {
+      const { result } = renderHook(() => useNewProduct());
+
+      act(() => {
+        result.current.changeNewProduct("name", "야미");
+      });
+      expect(result.current.newProduct).toEqual({
+        name: "야미",
+        price: 0,
+        stock: 0,
+        discountList: [],
+      });
+
+      act(() => {
+        result.current.changeNewProduct("price", 30000);
+      });
+      expect(result.current.newProduct).toEqual({
+        name: "야미",
+        price: 30000,
+        stock: 0,
+        discountList: [],
+      });
+
+      act(() => {
+        result.current.changeNewProduct("discountList", [
+          { quantity: 2, rate: 0.1 },
+          { quantity: 5, rate: 0.2 },
+        ]);
+      });
+      expect(result.current.newProduct).toEqual({
+        name: "야미",
+        price: 30000,
+        stock: 0,
+        discountList: [
+          { quantity: 2, rate: 0.1 },
+          { quantity: 5, rate: 0.2 },
+        ],
+      });
+    });
+
+    test("제품을 초기화 합니다.", () => {
+      const { result } = renderHook(() => useNewProduct());
+
+      act(() => {
+        result.current.changeNewProduct("name", "야미");
+        result.current.changeNewProduct("price", 30000);
+
+        result.current.initializeProduct();
+      });
+
+      expect(result.current.newProduct).toEqual({
+        name: "",
+        price: 0,
+        stock: 0,
+        discountList: [],
+      });
     });
   });
 });

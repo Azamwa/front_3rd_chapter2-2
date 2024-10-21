@@ -1,30 +1,22 @@
 import { Dispatch, SetStateAction } from "react";
+
 import { ProductType } from "../../../types";
+import useNewProduct from "../../hooks/use-new-product";
 
 interface AddNewProductProps {
-  newProduct: Omit<ProductType, "id">;
-  setNewProduct: Dispatch<SetStateAction<Omit<ProductType, "id">>>;
   onProductAdd: (newProduct: ProductType) => void;
   setShowNewProductForm: Dispatch<SetStateAction<boolean>>;
 }
 
-const AddNewProduct = ({
-  newProduct,
-  setNewProduct,
-  onProductAdd,
-  setShowNewProductForm,
-}: AddNewProductProps) => {
-  const handleAddNewProduct = () => {
+const AddNewProduct = ({ onProductAdd, setShowNewProductForm }: AddNewProductProps) => {
+  const { newProduct, changeNewProduct, initializeProduct } = useNewProduct();
+
+  function handleAddNewProduct() {
     const productWithId = { ...newProduct, id: Date.now().toString() };
     onProductAdd(productWithId);
-    setNewProduct({
-      name: "",
-      price: 0,
-      stock: 0,
-      discountList: [],
-    });
+    initializeProduct();
     setShowNewProductForm(false);
-  };
+  }
 
   return (
     <>
@@ -36,7 +28,7 @@ const AddNewProduct = ({
           id="productName"
           type="text"
           value={newProduct.name}
-          onChange={e => setNewProduct({ ...newProduct, name: e.target.value })}
+          onChange={e => changeNewProduct("name", e.target.value)}
           className="w-full p-2 border rounded"
         />
       </div>
@@ -48,7 +40,7 @@ const AddNewProduct = ({
           id="productPrice"
           type="number"
           value={newProduct.price}
-          onChange={e => setNewProduct({ ...newProduct, price: parseInt(e.target.value) })}
+          onChange={e => changeNewProduct("price", parseInt(e.target.value))}
           className="w-full p-2 border rounded"
         />
       </div>
@@ -60,7 +52,7 @@ const AddNewProduct = ({
           id="productStock"
           type="number"
           value={newProduct.stock}
-          onChange={e => setNewProduct({ ...newProduct, stock: parseInt(e.target.value) })}
+          onChange={e => changeNewProduct("stock", parseInt(e.target.value))}
           className="w-full p-2 border rounded"
         />
       </div>

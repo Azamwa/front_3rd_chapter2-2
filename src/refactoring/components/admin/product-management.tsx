@@ -17,12 +17,7 @@ const ProductManagement = ({
   onProductAdd,
 }: ProductManagementProps) => {
   const [showNewProductForm, setShowNewProductForm] = useState(false);
-  const [newProduct, setNewProduct] = useState<Omit<ProductType, "id">>({
-    name: "",
-    price: 0,
-    stock: 0,
-    discountList: [],
-  });
+
   return (
     <>
       <button
@@ -35,8 +30,6 @@ const ProductManagement = ({
         <div className="bg-white p-4 rounded shadow mb-4">
           <h3 className="text-xl font-semibold mb-2">새 상품 추가</h3>
           <AddNewProduct
-            newProduct={newProduct}
-            setNewProduct={setNewProduct}
             onProductAdd={onProductAdd}
             setShowNewProductForm={setShowNewProductForm}
           />
