@@ -6,8 +6,8 @@ interface MaxDiscountStockProps {
 }
 
 const MaxDiscountStock = ({ product, getRemainingStock }: MaxDiscountStockProps) => {
-  const getMaxDiscount = (discounts: { quantity: number; rate: number }[]) => {
-    return discounts.reduce((max, discount) => Math.max(max, discount.rate), 0);
+  const getMaxDiscount = (discountList: { quantity: number; rate: number }[]) => {
+    return discountList.reduce((max, discount) => Math.max(max, discount.rate), 0);
   };
 
   return (
@@ -17,9 +17,9 @@ const MaxDiscountStock = ({ product, getRemainingStock }: MaxDiscountStockProps)
       >
         재고: {getRemainingStock(product)}개
       </span>
-      {product.discounts.length > 0 && (
+      {product.discountList.length > 0 && (
         <span className="ml-2 font-medium text-blue-600">
-          최대 {(getMaxDiscount(product.discounts) * 100).toFixed(0)}% 할인
+          최대 {(getMaxDiscount(product.discountList) * 100).toFixed(0)}% 할인
         </span>
       )}
     </div>

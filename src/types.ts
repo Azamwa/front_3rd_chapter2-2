@@ -3,7 +3,7 @@ export interface ProductType {
   name: string;
   price: number;
   stock: number;
-  discounts: DiscountType[];
+  discountList: DiscountType[];
 }
 
 export interface DiscountType {
