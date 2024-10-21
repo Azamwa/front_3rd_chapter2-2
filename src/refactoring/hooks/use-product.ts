@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { ProductType } from "../../types";
 
 export const useProductList = (initialProductList: ProductType[]) => {
