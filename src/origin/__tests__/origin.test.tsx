@@ -5,30 +5,30 @@ import { CouponType, ProductType } from "../../types";
 import { AdminPage } from "../components/AdminPage.tsx";
 import { useState } from "react";
 
-const mockProducts: ProductType[] = [
+const mockProductList: ProductType[] = [
   {
     id: "p1",
     name: "상품1",
     price: 10000,
     stock: 20,
-    discounts: [{ quantity: 10, rate: 0.1 }],
+    discountList: [{ quantity: 10, rate: 0.1 }],
   },
   {
     id: "p2",
     name: "상품2",
     price: 20000,
     stock: 20,
-    discounts: [{ quantity: 10, rate: 0.15 }],
+    discountList: [{ quantity: 10, rate: 0.15 }],
   },
   {
     id: "p3",
     name: "상품3",
     price: 30000,
     stock: 20,
-    discounts: [{ quantity: 10, rate: 0.2 }],
+    discountList: [{ quantity: 10, rate: 0.2 }],
   },
 ];
-const mockCoupons: CouponType[] = [
+const mockCouponList: CouponType[] = [
   {
     name: "5000원 할인 쿠폰",
     code: "AMOUNT5000",
@@ -44,27 +44,25 @@ const mockCoupons: CouponType[] = [
 ];
 
 const TestAdminPage = () => {
-  const [products, setProducts] = useState<ProductType[]>(mockProducts);
-  const [coupons, setCoupons] = useState<CouponType[]>(mockCoupons);
+  const [productList, setProductList] = useState<ProductType[]>(mockProductList);
+  const [couponList, setCouponList] = useState<CouponType[]>(mockCouponList);
 
   const handleProductUpdate = (updatedProduct: ProductType) => {
-    setProducts(prevProducts =>
-      prevProducts.map(p => (p.id === updatedProduct.id ? updatedProduct : p)),
-    );
+    setProductList(prev => prev.map(p => (p.id === updatedProduct.id ? updatedProduct : p)));
   };
 
   const handleProductAdd = (newProduct: ProductType) => {
-    setProducts(prevProducts => [...prevProducts, newProduct]);
+    setProductList(prev => [...prev, newProduct]);
   };
 
   const handleCouponAdd = (newCoupon: CouponType) => {
-    setCoupons(prevCoupons => [...prevCoupons, newCoupon]);
+    setCouponList(prevCouponList => [...prevCouponList, newCoupon]);
   };
 
   return (
     <AdminPage
-      products={products}
-      coupons={coupons}
+      productList={productList}
+      couponList={couponList}
       onProductUpdate={handleProductUpdate}
       onProductAdd={handleProductAdd}
       onCouponAdd={handleCouponAdd}
@@ -74,7 +72,7 @@ const TestAdminPage = () => {
 
 describe("시나리오 테스트", () => {
   test("장바구니 페이지 테스트", async () => {
-    render(<CartPage products={mockProducts} coupons={mockCoupons} />);
+    render(<CartPage productList={mockProductList} couponList={mockCouponList} />);
     const product1 = screen.getByTestId("product-p1");
     const product2 = screen.getByTestId("product-p2");
     const product3 = screen.getByTestId("product-p3");
@@ -135,8 +133,8 @@ describe("시나리오 테스트", () => {
     expect(screen.getByText("최종 결제 금액: 590,000원")).toBeInTheDocument();
 
     // 10. 쿠폰 적용하기
-    const couponSelect = screen.getByRole("combobox");
-    fireEvent.change(couponSelect, { target: { value: "1" } }); // 10% 할인 쿠폰 선택
+    const couponListelect = screen.getByRole("combobox");
+    fireEvent.change(couponListelect, { target: { value: "1" } }); // 10% 할인 쿠폰 선택
 
     // 11. 할인율 계산
     expect(screen.getByText("상품 금액: 700,000원")).toBeInTheDocument();
@@ -144,7 +142,7 @@ describe("시나리오 테스트", () => {
     expect(screen.getByText("최종 결제 금액: 531,000원")).toBeInTheDocument();
 
     // 12. 다른 할인 쿠폰 적용하기
-    fireEvent.change(couponSelect, { target: { value: "0" } }); // 5000원 할인 쿠폰
+    fireEvent.change(couponListelect, { target: { value: "0" } }); // 5000원 할인 쿠폰
     expect(screen.getByText("상품 금액: 700,000원")).toBeInTheDocument();
     expect(screen.getByText("할인 금액: 115,000원")).toBeInTheDocument();
     expect(screen.getByText("최종 결제 금액: 585,000원")).toBeInTheDocument();

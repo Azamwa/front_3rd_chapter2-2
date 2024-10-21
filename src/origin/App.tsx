@@ -3,7 +3,7 @@ import { CartPage } from "./components/CartPage.tsx";
 import { AdminPage } from "./components/AdminPage.tsx";
 import { CouponType, ProductType } from "../types.ts";
 
-const initialProducts: ProductType[] = [
+const initialProductList: ProductType[] = [
   {
     id: "p1",
     name: "상품1",
@@ -30,7 +30,7 @@ const initialProducts: ProductType[] = [
   },
 ];
 
-const initialCoupons: CouponType[] = [
+const initialcouponList: CouponType[] = [
   {
     name: "5000원 할인 쿠폰",
     code: "AMOUNT5000",
@@ -46,22 +46,20 @@ const initialCoupons: CouponType[] = [
 ];
 
 const App = () => {
-  const [products, setProducts] = useState<ProductType[]>(initialProducts);
-  const [coupons, setCoupons] = useState<CouponType[]>(initialCoupons);
+  const [productList, setProductList] = useState<ProductType[]>(initialProductList);
+  const [couponList, setcouponList] = useState<CouponType[]>(initialcouponList);
   const [isAdmin, setIsAdmin] = useState(false);
 
   const handleProductUpdate = (updatedProduct: ProductType) => {
-    setProducts(prevProducts =>
-      prevProducts.map(p => (p.id === updatedProduct.id ? updatedProduct : p)),
-    );
+    setProductList(prev => prev.map(p => (p.id === updatedProduct.id ? updatedProduct : p)));
   };
 
   const handleProductAdd = (newProduct: ProductType) => {
-    setProducts(prevProducts => [...prevProducts, newProduct]);
+    setProductList(prev => [...prev, newProduct]);
   };
 
   const handleCouponAdd = (newCoupon: CouponType) => {
-    setCoupons(prevCoupons => [...prevCoupons, newCoupon]);
+    setcouponList(prevcouponList => [...prevcouponList, newCoupon]);
   };
 
   return (
@@ -80,14 +78,14 @@ const App = () => {
       <main className="container mx-auto mt-6">
         {isAdmin ? (
           <AdminPage
-            products={products}
-            coupons={coupons}
+            productList={productList}
+            couponList={couponList}
             onProductUpdate={handleProductUpdate}
             onProductAdd={handleProductAdd}
             onCouponAdd={handleCouponAdd}
           />
         ) : (
-          <CartPage products={products} coupons={coupons} />
+          <CartPage productList={productList} couponList={couponList} />
         )}
       </main>
     </div>
