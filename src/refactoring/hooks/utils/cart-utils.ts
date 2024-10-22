@@ -47,7 +47,6 @@ const getTotalAfterDiscount = (cart: CartItemType[]) => {
 export const calculateCartTotal = (cart: CartItemType[], selectedCoupon: CouponType | null) => {
   const totalBeforeDiscount = getTotalBeforeDiscount(cart);
   let totalAfterDiscount = getTotalAfterDiscount(cart);
-  let totalDiscount = totalBeforeDiscount - totalAfterDiscount;
 
   if (selectedCoupon !== null) {
     if (selectedCoupon.discountType === "amount") {
@@ -55,12 +54,13 @@ export const calculateCartTotal = (cart: CartItemType[], selectedCoupon: CouponT
     } else {
       totalAfterDiscount *= 1 - selectedCoupon.discountValue / 100;
     }
-    totalDiscount = totalBeforeDiscount - totalAfterDiscount;
   }
 
+  const totalDiscount = totalBeforeDiscount - totalAfterDiscount;
+
   return {
-    totalBeforeDiscount,
-    totalAfterDiscount,
+    totalBeforeDiscount: Math.round(totalBeforeDiscount),
+    totalAfterDiscount: Math.round(totalAfterDiscount),
     totalDiscount,
   };
 };

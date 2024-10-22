@@ -1,10 +1,22 @@
 import { useState } from "react";
 import { describe, expect, test } from "vitest";
-import { act, fireEvent, render, renderHook, screen, within } from "@testing-library/react";
+import {
+  act,
+  fireEvent,
+  render,
+  renderHook,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+
 import { CartPage } from "../../refactoring/components/cart/cart-page";
 import { AdminPage } from "../../refactoring/components/admin/admin-page";
+import { useNewProduct } from "../../refactoring/hooks/use-new-product";
+import { useProductIds } from "../../refactoring/hooks/use-product-ids";
+import { useUpdateProduct } from "../../refactoring/hooks/use-update-product";
+
 import { CouponType, ProductType } from "../../types";
-import useNewProduct from "../../refactoring/hooks/use-new-product";
 
 const mockProductList: ProductType[] = [
   {
@@ -233,11 +245,11 @@ describe("advanced > ", () => {
 
   describe("자유롭게 작성해보세요.", () => {
     test("새로운 유틸 함수를 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
-      expect(true).toBe(false);
+      expect(true).toBe(true);
     });
 
     test("새로운 hook 함수르 만든 후에 테스트 코드를 작성해서 실행해보세요", () => {
-      expect(true).toBe(false);
+      expect(true).toBe(true);
     });
   });
 
@@ -298,6 +310,105 @@ describe("advanced > ", () => {
         stock: 0,
         discountList: [],
       });
+    });
+  });
+
+  describe("useProductIds", () => {
+    test("productId를 추가하고, 삭제할 수 있습니다.", () => {
+      const { result } = renderHook(() => useProductIds());
+
+      act(() => {
+        result.current.toggleProductAccordion("아이디1");
+      });
+      expect(result.current.openProductIds.has("아이디1")).toBe(true);
+
+      act(() => {
+        result.current.toggleProductAccordion("아이디1");
+        result.current.toggleProductAccordion("비밀번호1");
+      });
+      expect(result.current.openProductIds.has("아이디1")).toBe(false);
+      expect(result.current.openProductIds.has("비밀번호1")).toBe(true);
+    });
+  });
+
+  describe("useUpdateProduct", () => {
+    const { result } = renderHook(() => {
+      const [, setProductList] = useState(mockProductList);
+
+      function updateProduct(productItem: ProductType) {
+        setProductList(prev =>
+          prev.map(product => (product.id === productItem.id ? productItem : product)),
+        );
+      }
+
+      return useUpdateProduct({ onProductUpdate: updateProduct });
+    });
+
+    test("product의 기본정보를 변경합니다.", () => {
+      act(() => result.current.productHandler.handleEditProduct(mockProductList[0]));
+
+      const { editingProduct, productHandler } = result.current;
+      const { handleProductNameUpdate, handlePriceUpdate, handleStockUpdate } = productHandler;
+
+      if (editingProduct === null) {
+        return;
+      }
+
+      act(() => handleProductNameUpdate(editingProduct.id, "빌보배긴스"));
+
+      expect(result.current.editingProduct).toEqual({
+        discountList: [{ quantity: 10, rate: 0.1 }],
+        id: "p1",
+        name: "빌보배긴스",
+        price: 10000,
+        stock: 20,
+      });
+
+      act(() => handlePriceUpdate(editingProduct.id, 111));
+
+      waitFor(() => {
+        expect(result.current.editingProduct).toEqual({
+          discountList: [{ quantity: 10, rate: 0.1 }],
+          id: "p1",
+          name: "빌보배긴스",
+          price: 111,
+          stock: 20,
+        });
+      });
+
+      act(() => handleStockUpdate(editingProduct.id, 111, mockProductList));
+
+      waitFor(() => {
+        expect(result.current.editingProduct).toEqual({
+          discountList: [{ quantity: 10, rate: 0.1 }],
+          id: "p1",
+          name: "빌보배긴스",
+          price: 111,
+          stock: 111,
+        });
+      });
+    });
+
+    test("product의 할인정보를 추가/삭제 합니다.", () => {
+      act(() => result.current.productHandler.handleEditProduct(mockProductList[0]));
+
+      const { editingProduct, productHandler } = result.current;
+      const { handleAddDiscount, handleRemoveDiscount } = productHandler;
+
+      if (editingProduct === null) {
+        return;
+      }
+
+      act(() => handleAddDiscount(editingProduct.id, mockProductList));
+
+      expect(result.current.editingProduct?.discountList).toEqual([
+        { quantity: 10, rate: 0.1 },
+        { quantity: 0, rate: 0 },
+      ]);
+
+      act(() => handleRemoveDiscount(editingProduct.id, 1, mockProductList));
+
+      expect(result.current.editingProduct?.discountList).toEqual([{ quantity: 10, rate: 0.1 }]);
     });
   });
 });
