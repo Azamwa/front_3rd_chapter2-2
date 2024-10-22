@@ -22,3 +22,13 @@ export interface CouponType {
   discountType: "amount" | "percentage";
   discountValue: number;
 }
+
+export interface ProductHandlerType {
+  handleProductNameUpdate: (productId: string, newName: string) => void;
+  handlePriceUpdate: (productId: string, newPrice: number) => void;
+  handleStockUpdate: (productId: string, newStock: number, productList: ProductType[]) => void;
+  handleRemoveDiscount: (productId: string, index: number, productList: ProductType[]) => void;
+  handleAddDiscount: (productId: string, productList: ProductType[]) => void;
+  handleEditComplete: () => void;
+  handleEditProduct: (product: ProductType) => void;
+}

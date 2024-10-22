@@ -8,7 +8,7 @@ const initialNewProduct = {
   discountList: [],
 };
 
-const useNewProduct = () => {
+export const useNewProduct = () => {
   const [newProduct, setNewProduct] = useState<Omit<ProductType, "id">>(initialNewProduct);
 
   function changeNewProduct<K extends keyof ProductType>(key: K, value: ProductType[K]) {
@@ -21,5 +21,3 @@ const useNewProduct = () => {
 
   return { newProduct, changeNewProduct, initializeProduct };
 };
-
-export default useNewProduct;
