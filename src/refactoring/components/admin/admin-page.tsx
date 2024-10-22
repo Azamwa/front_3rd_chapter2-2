@@ -1,8 +1,8 @@
 import AddCoupon from "./add-coupon.tsx";
-import CurrentCouponList from "./current-coupon-list.tsx";
+import ProductManagement from "./product-management.tsx";
+import CurrentCoupon from "./current-coupon.tsx";
 
 import { CouponType, ProductType } from "../../../types.ts";
-import ProductManagement from "./product-management.tsx";
 
 interface AdminPageProps {
   productList: ProductType[];
@@ -35,7 +35,14 @@ export const AdminPage = ({
           <h2 className="text-2xl font-semibold mb-4">쿠폰 관리</h2>
           <div className="bg-white p-4 rounded shadow">
             <AddCoupon onCouponAdd={onCouponAdd} />
-            <CurrentCouponList couponList={couponList} />
+            <div>
+              <h3 className="text-lg font-semibold mb-2">현재 쿠폰 목록</h3>
+              <div className="space-y-2">
+                {couponList.map((coupon, index) => (
+                  <CurrentCoupon coupon={coupon} index={index} key={coupon.code + index} />
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
