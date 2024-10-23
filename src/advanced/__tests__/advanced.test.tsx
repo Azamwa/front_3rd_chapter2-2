@@ -18,6 +18,11 @@ import { useUpdateProduct } from "../../refactoring/hooks/use-update-product";
 
 import { CouponType, ProductType } from "../../types";
 import useNewCoupon from "../../refactoring/hooks/use-new-coupon";
+import {
+  getListItemById,
+  getUpdateValue,
+  removeItemByIndex,
+} from "../../refactoring/hooks/utils/common";
 
 const mockProductList: ProductType[] = [
   {
@@ -427,22 +432,62 @@ describe("advanced > ", () => {
     test("새쿠폰의 정보를 변경합니다.", () => {
       act(() => result.current.hanldeChangeCouponInfo("name", "안두릴"));
 
-      expect(result.current.newCoupon).toEqual({
-        code: "",
-        discountType: "percentage",
-        discountValue: 0,
-        name: "안두릴",
+      waitFor(() => {
+        expect(result.current.newCoupon).toEqual({
+          code: "",
+          discountType: "percentage",
+          discountValue: 0,
+          name: "안두릴",
+        });
       });
 
       act(() => result.current.hanldeChangeCouponInfo("discountType", "amount"));
       act(() => result.current.hanldeChangeCouponInfo("discountValue", 3500));
 
-      expect(result.current.newCoupon).toEqual({
-        code: "",
-        discountType: "amount",
-        discountValue: 3500,
-        name: "안두릴",
+      waitFor(() => {
+        expect(result.current.newCoupon).toEqual({
+          code: "",
+          discountType: "amount",
+          discountValue: 3500,
+          name: "안두릴",
+        });
       });
+    });
+  });
+
+  describe("전역에서 사용될 함수들을 테스트합니다.", () => {
+    test("getUpdatedValue => 상태를 업데이트 하는 순수함수", () => {
+      const initialValue = {
+        아라곤: "장검",
+        레골라스: "갈라드리엘의 활",
+        김리: "도끼",
+      };
+      const updatedValue = getUpdateValue(initialValue, "아라곤", "안두릴");
+
+      expect(updatedValue).toEqual({
+        아라곤: "안두릴",
+        레골라스: "갈라드리엘의 활",
+        김리: "도끼",
+      });
+    });
+
+    test("getListItemById => id값에 해당하는 객체를 찾습니다.", () => {
+      const initialValue = [
+        { id: "티리엘", type: "대천사" },
+        { id: "메피스토", type: "대악마" },
+        { id: "아마존", type: "제프 베이조스" },
+      ];
+
+      const findValue = getListItemById(initialValue, "티리엘");
+
+      expect(findValue?.type).toBe("대천사");
+    });
+
+    test("removeItemByIndex => index값에 해당하는 항목을 삭제하고 반환합니다.", () => {
+      const initialValue = ["티리엘", "말티엘", "임페리우스", "아우리엘", "이테리엘"];
+      const remainedValue = removeItemByIndex(initialValue, 1);
+
+      expect(remainedValue).toEqual(["티리엘", "임페리우스", "아우리엘", "이테리엘"]);
     });
   });
 });
