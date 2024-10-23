@@ -1,4 +1,4 @@
-import { ProductHandlerType, ProductType } from "../../../types";
+import { ProductHandlerType, ProductType } from "../../../../types";
 
 interface UpdateProductInfoProps {
   productId: string;

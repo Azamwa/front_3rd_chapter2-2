@@ -1,7 +1,7 @@
 import CouponSelect from "./coupon-select";
-
-import { CouponType } from "../../../types";
 import SelectedCoupon from "./selected-coupon";
+
+import { CouponType } from "../../../../types";
 
 interface ApplyCouponProps {
   couponList: CouponType[];

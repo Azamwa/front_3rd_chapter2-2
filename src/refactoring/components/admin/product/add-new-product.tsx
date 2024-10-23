@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 
-import { ProductType } from "../../../types";
-import { useNewProduct } from "../../hooks/use-new-product";
+import { ProductType } from "../../../../types";
+import { useNewProduct } from "../../../hooks/use-new-product";
 
 interface AddNewProductProps {
   onProductAdd: (newProduct: ProductType) => void;

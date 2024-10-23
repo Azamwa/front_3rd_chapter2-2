@@ -1,6 +1,6 @@
-import useNewCoupon from "../../hooks/use-new-coupon";
+import useNewCoupon from "../../../hooks/use-new-coupon";
 
-import { CouponType } from "../../../types";
+import { CouponType } from "../../../../types";
 
 interface AddCouponProps {
   onCouponAdd: (newCoupon: CouponType) => void;

@@ -1,4 +1,4 @@
-import { DiscountType, ProductType } from "../../../types";
+import { DiscountType, ProductType } from "../../../../types";
 
 interface AddDiscountProps {
   newDiscount: DiscountType;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import AddNewProduct from "./add-new-product";
 import ProductItem from "./product-item";
 
-import { ProductType } from "../../../types";
+import { ProductType } from "../../../../types";
 
 interface ProductManagementProps {
   productList: ProductType[];

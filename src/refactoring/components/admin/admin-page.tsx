@@ -1,6 +1,6 @@
-import AddCoupon from "./add-coupon.tsx";
-import ProductManagement from "./product-management.tsx";
-import CurrentCoupon from "./current-coupon.tsx";
+import AddCoupon from "./coupon/add-coupon.tsx";
+import ProductManagement from "./product/product-management.tsx";
+import CurrentCoupon from "./coupon/current-coupon.tsx";
 
 import { CouponType, ProductType } from "../../../types.ts";
 

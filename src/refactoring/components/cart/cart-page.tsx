@@ -1,9 +1,9 @@
 import { useCart } from "../../hooks/index";
 
-import CartItem from "./cart-item";
-import ProductItem from "./product-item";
-import ApplyCoupon from "./apply-coupon";
-import OrderSummary from "./order-summary";
+import CartItem from "./cartItem/cart-item";
+import ProductItem from "./productItem/product-item";
+import ApplyCoupon from "./applyCoupon/apply-coupon";
+import OrderSummary from "./orderSummary/order-summary";
 
 import { CouponType, ProductType } from "../../../types";
 

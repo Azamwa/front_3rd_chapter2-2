@@ -1,7 +1,7 @@
 import DiscountCondition from "./discount-condition";
 import MaxDiscountStock from "./max-discount-stock";
 
-import { CartItemType, ProductType } from "../../../types";
+import { CartItemType, ProductType } from "../../../../types";
 
 interface ProductItemProps {
   product: ProductType;
