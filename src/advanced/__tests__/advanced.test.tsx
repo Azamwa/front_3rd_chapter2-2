@@ -17,6 +17,7 @@ import { useProductIds } from "../../refactoring/hooks/use-product-ids";
 import { useUpdateProduct } from "../../refactoring/hooks/use-update-product";
 
 import { CouponType, ProductType } from "../../types";
+import useNewCoupon from "../../refactoring/hooks/use-new-coupon";
 
 const mockProductList: ProductType[] = [
   {
@@ -409,6 +410,39 @@ describe("advanced > ", () => {
       act(() => handleRemoveDiscount(editingProduct.id, 1, mockProductList));
 
       expect(result.current.editingProduct?.discountList).toEqual([{ quantity: 10, rate: 0.1 }]);
+    });
+  });
+
+  describe("useNewCoupon", () => {
+    const { result } = renderHook(() => {
+      const [, setCouponList] = useState(mockCouponList);
+
+      function updateCouponList(coupon: CouponType) {
+        setCouponList(prev => [...prev, coupon]);
+      }
+
+      return useNewCoupon({ onCouponAdd: updateCouponList });
+    });
+
+    test("새쿠폰의 정보를 변경합니다.", () => {
+      act(() => result.current.hanldeChangeCouponInfo("name", "안두릴"));
+
+      expect(result.current.newCoupon).toEqual({
+        code: "",
+        discountType: "percentage",
+        discountValue: 0,
+        name: "안두릴",
+      });
+
+      act(() => result.current.hanldeChangeCouponInfo("discountType", "amount"));
+      act(() => result.current.hanldeChangeCouponInfo("discountValue", 3500));
+
+      expect(result.current.newCoupon).toEqual({
+        code: "",
+        discountType: "amount",
+        discountValue: 3500,
+        name: "안두릴",
+      });
     });
   });
 });
