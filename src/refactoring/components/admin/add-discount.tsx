@@ -1,42 +1,32 @@
-import { Dispatch, SetStateAction } from "react";
 import { DiscountType, ProductType } from "../../../types";
 
 interface AddDiscountProps {
   newDiscount: DiscountType;
-  setNewDiscount: Dispatch<SetStateAction<DiscountType>>;
   addDiscount: {
-    handleAddDiscount: (productId: string, productList: ProductType[]) => void;
     productId: string;
     productList: ProductType[];
+    handleChangeNewDiscount: <K extends keyof DiscountType>(key: K, value: DiscountType[K]) => void;
+    handleAddDiscount: (productId: string, productList: ProductType[]) => void;
   };
 }
 
-const AddDiscount = ({ newDiscount, setNewDiscount, addDiscount }: AddDiscountProps) => {
-  const { productId, productList, handleAddDiscount } = addDiscount;
+const AddDiscount = ({ newDiscount, addDiscount }: AddDiscountProps) => {
+  const { productId, productList, handleAddDiscount, handleChangeNewDiscount } = addDiscount;
+
   return (
     <>
       <input
         type="number"
         placeholder="수량"
         value={newDiscount.quantity}
-        onChange={e =>
-          setNewDiscount({
-            ...newDiscount,
-            quantity: parseInt(e.target.value),
-          })
-        }
+        onChange={e => handleChangeNewDiscount("quantity", parseInt(e.target.value))}
         className="w-1/3 p-2 border rounded"
       />
       <input
         type="number"
         placeholder="할인율 (%)"
         value={newDiscount.rate * 100}
-        onChange={e =>
-          setNewDiscount({
-            ...newDiscount,
-            rate: parseInt(e.target.value) / 100,
-          })
-        }
+        onChange={e => handleChangeNewDiscount("rate", parseInt(e.target.value) / 100)}
         className="w-1/3 p-2 border rounded"
       />
       <button

@@ -14,7 +14,7 @@ interface ProductEditorProps {
 }
 
 const ProductEditor = (productEditorProps: ProductEditorProps) => {
-  const { productList, productItem, editingProduct, newDiscount, setNewDiscount, productHandler } =
+  const { productList, productItem, editingProduct, newDiscount, productHandler } =
     productEditorProps;
 
   const {
@@ -23,6 +23,7 @@ const ProductEditor = (productEditorProps: ProductEditorProps) => {
     handleStockUpdate,
     handleRemoveDiscount,
     handleAddDiscount,
+    handleChangeNewDiscount,
     handleEditComplete,
   } = productHandler;
 
@@ -49,8 +50,12 @@ const ProductEditor = (productEditorProps: ProductEditorProps) => {
         <div className="flex space-x-2">
           <AddDiscount
             newDiscount={newDiscount}
-            setNewDiscount={setNewDiscount}
-            addDiscount={{ productId: productItem.id, productList, handleAddDiscount }}
+            addDiscount={{
+              productId: productItem.id,
+              productList,
+              handleAddDiscount,
+              handleChangeNewDiscount,
+            }}
           />
         </div>
       </div>

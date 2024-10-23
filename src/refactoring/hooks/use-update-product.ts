@@ -62,6 +62,16 @@ export const useUpdateProduct = ({ onProductUpdate }: UseUpdateProductProps) => 
       }
     },
 
+    handleChangeNewDiscount: function <K extends keyof DiscountType>(
+      key: K,
+      value: DiscountType[K],
+    ) {
+      setNewDiscount(prev => {
+        const updatedDiscount = getUpdateValue(prev, key, value);
+        return updatedDiscount;
+      });
+    },
+
     handleEditComplete: function () {
       if (editingProduct !== null) {
         onProductUpdate(editingProduct);

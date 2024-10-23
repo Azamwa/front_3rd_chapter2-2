@@ -29,6 +29,7 @@ export interface ProductHandlerType {
   handleStockUpdate: (productId: string, newStock: number, productList: ProductType[]) => void;
   handleRemoveDiscount: (productId: string, index: number, productList: ProductType[]) => void;
   handleAddDiscount: (productId: string, productList: ProductType[]) => void;
+  handleChangeNewDiscount: <K extends keyof DiscountType>(key: K, value: DiscountType[K]) => void;
   handleEditComplete: () => void;
   handleEditProduct: (product: ProductType) => void;
 }
