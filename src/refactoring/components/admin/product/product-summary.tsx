@@ -1,5 +1,6 @@
-import { ProductType } from "../../../../types";
 import DiscountList from "./discount-list";
+
+import { ProductType } from "../../../../types";
 
 interface ProductSummaryProps {
   productItem: ProductType;

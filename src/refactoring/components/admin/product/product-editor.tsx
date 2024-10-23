@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { DiscountType, ProductHandlerType, ProductType } from "../../../../types";
+
 import DiscountList from "./discount-list";
 import UpdateProductInfo from "./update-product-info";
 import AddDiscount from "./add-discount";
+
+import { DiscountType, ProductHandlerType, ProductType } from "../../../../types";
 
 interface ProductEditorProps {
   productList: ProductType[];

@@ -9,20 +9,20 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
-
-import { CartPage } from "../../refactoring/components/cart/cart-page";
-import { AdminPage } from "../../refactoring/components/admin/admin-page";
 import { useNewProduct } from "../../refactoring/hooks/use-new-product";
 import { useProductIds } from "../../refactoring/hooks/use-product-ids";
 import { useUpdateProduct } from "../../refactoring/hooks/use-update-product";
-
-import { CouponType, ProductType } from "../../types";
 import useNewCoupon from "../../refactoring/hooks/use-new-coupon";
 import {
   getListItemById,
   getUpdateValue,
   removeItemByIndex,
 } from "../../refactoring/hooks/utils/common";
+
+import { CartPage } from "../../refactoring/components/cart/cart-page";
+import { AdminPage } from "../../refactoring/components/admin/admin-page";
+
+import { CouponType, ProductType } from "../../types";
 
 const mockProductList: ProductType[] = [
   {

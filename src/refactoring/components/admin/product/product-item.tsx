@@ -2,9 +2,9 @@ import { useUpdateProduct } from "../../../hooks/use-update-product";
 import { useProductIds } from "../../../hooks/use-product-ids";
 
 import ProductEditor from "./product-editor";
+import ProductSummary from "./product-summary";
 
 import { ProductType } from "../../../../types";
-import ProductSummary from "./product-summary";
 
 interface ProductItemProps {
   productList: ProductType[];

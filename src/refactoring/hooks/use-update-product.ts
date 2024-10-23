@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { getListItemById, getUpdateValue, removeItemByIndex } from "./utils/common";
+
 import { DiscountType, ProductHandlerType, ProductType } from "../../types";
 
 interface UseUpdateProductProps {
