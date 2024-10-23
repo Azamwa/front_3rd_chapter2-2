@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getListItemById, getUpdateValue, removeItemByIndex } from "./utils/common";
 import { DiscountType, ProductHandlerType, ProductType } from "../../types";
 
 interface UseUpdateProductProps {
@@ -12,23 +13,23 @@ export const useUpdateProduct = ({ onProductUpdate }: UseUpdateProductProps) => 
   const productHandler: ProductHandlerType = {
     handleProductNameUpdate: function (productId: string, newName: string) {
       if (editingProduct !== null && editingProduct.id === productId) {
-        const updatedProduct = getUpdatedNewProduct(editingProduct, "name", newName);
+        const updatedProduct = getUpdateValue(editingProduct, "name", newName);
         setEditingProduct(updatedProduct);
       }
     },
 
     handlePriceUpdate: function (productId: string, newPrice: number) {
       if (editingProduct !== null && editingProduct.id === productId) {
-        const updatedProduct = getUpdatedNewProduct(editingProduct, "price", newPrice);
+        const updatedProduct = getUpdateValue(editingProduct, "price", newPrice);
         setEditingProduct(updatedProduct);
       }
     },
 
     handleStockUpdate: function (productId: string, newStock: number, productList: ProductType[]) {
-      const updatedProduct = getProductById(productList, productId);
+      const updatedProduct = getListItemById(productList, productId);
 
       if (updatedProduct !== undefined) {
-        const newProduct = getUpdatedNewProduct(updatedProduct, "stock", newStock);
+        const newProduct = getUpdateValue(updatedProduct, "stock", newStock);
         onProductUpdate(newProduct);
         setEditingProduct(newProduct);
       }
@@ -39,18 +40,22 @@ export const useUpdateProduct = ({ onProductUpdate }: UseUpdateProductProps) => 
       discountIndex: number,
       productList: ProductType[],
     ) {
-      const updatedProduct = getProductById(productList, productId);
+      const updatedProduct = getListItemById(productList, productId);
       if (updatedProduct !== undefined) {
-        const newProduct = getRemovedDiscountProduct(updatedProduct, discountIndex);
+        const discountList = removeItemByIndex(updatedProduct.discountList, discountIndex);
+        const newProduct = getUpdateValue(updatedProduct, "discountList", discountList);
+
         onProductUpdate(newProduct);
         setEditingProduct(newProduct);
       }
     },
 
     handleAddDiscount: function (productId: string, productList: ProductType[]) {
-      const updatedProduct = getProductById(productList, productId);
+      const updatedProduct = getListItemById(productList, productId);
       if (updatedProduct !== undefined && editingProduct !== null) {
-        const newProduct = getNewDiscountProduct(updatedProduct);
+        const discountList = [...updatedProduct.discountList, newDiscount];
+        const newProduct = getUpdateValue(updatedProduct, "discountList", discountList);
+
         onProductUpdate(newProduct);
         setEditingProduct(newProduct);
         setNewDiscount({ quantity: 0, rate: 0 });
@@ -67,32 +72,6 @@ export const useUpdateProduct = ({ onProductUpdate }: UseUpdateProductProps) => 
     handleEditProduct: function (product: ProductType) {
       setEditingProduct({ ...product });
     },
-  };
-
-  const getProductById = (productList: ProductType[], productId: string) => {
-    return productList.find(product => product.id === productId);
-  };
-
-  const getUpdatedNewProduct = <K extends keyof ProductType>(
-    product: ProductType,
-    key: K,
-    value: ProductType[K],
-  ) => {
-    return { ...product, [key]: value };
-  };
-
-  const getRemovedDiscountProduct = (updatedProduct: ProductType, discountIndex: number) => {
-    return {
-      ...updatedProduct,
-      discountList: updatedProduct.discountList.filter((_, index) => index !== discountIndex),
-    };
-  };
-
-  const getNewDiscountProduct = (updatedProduct: ProductType) => {
-    return {
-      ...updatedProduct,
-      discountList: [...updatedProduct.discountList, newDiscount],
-    };
   };
 
   return {

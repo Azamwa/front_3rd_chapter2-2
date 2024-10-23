@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CouponType, DiscountType, ProductType } from "../../types";
+import { removeItemByIndex } from "../../refactoring/hooks/utils/common";
 
 interface Props {
   productList: ProductType[];
@@ -101,7 +102,7 @@ export const AdminPage = ({
     if (updatedProduct) {
       const newProduct = {
         ...updatedProduct,
-        discountList: updatedProduct.discountList.filter((_, i) => i !== index),
+        discountList: removeItemByIndex(updatedProduct.discountList, index),
       };
       onProductUpdate(newProduct);
       setEditingProduct(newProduct);

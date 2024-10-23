@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getUpdateValue } from "./utils/common";
 
 import { CouponType } from "../../types";
 
@@ -15,7 +16,7 @@ const useNewCoupon = ({ onCouponAdd }: UseNewCouponProps) => {
   });
 
   const hanldeChangeCouponInfo = <K extends keyof CouponType>(key: K, value: CouponType[K]) => {
-    setNewCoupon(prev => ({ ...prev, [key]: value }));
+    setNewCoupon(prev => getUpdateValue(prev, key, value));
   };
 
   const handleAddCoupon = () => {
