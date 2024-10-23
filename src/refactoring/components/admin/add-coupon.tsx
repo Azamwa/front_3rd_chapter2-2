@@ -1,4 +1,4 @@
-import { useState } from "react";
+import useNewCoupon from "../../hooks/use-new-coupon";
 
 import { CouponType } from "../../../types";
 
@@ -7,21 +7,7 @@ interface AddCouponProps {
 }
 
 const AddCoupon = ({ onCouponAdd }: AddCouponProps) => {
-  const [newCoupon, setNewCoupon] = useState<CouponType>({
-    name: "",
-    code: "",
-    discountType: "percentage",
-    discountValue: 0,
-  });
-  const handleAddCoupon = () => {
-    onCouponAdd(newCoupon);
-    setNewCoupon({
-      name: "",
-      code: "",
-      discountType: "percentage",
-      discountValue: 0,
-    });
-  };
+  const { newCoupon, handleAddCoupon, hanldeChangeCouponInfo } = useNewCoupon({ onCouponAdd });
 
   return (
     <div className="space-y-2 mb-4">
@@ -29,24 +15,21 @@ const AddCoupon = ({ onCouponAdd }: AddCouponProps) => {
         type="text"
         placeholder="쿠폰 이름"
         value={newCoupon.name}
-        onChange={e => setNewCoupon({ ...newCoupon, name: e.target.value })}
+        onChange={e => hanldeChangeCouponInfo("name", e.target.value)}
         className="w-full p-2 border rounded"
       />
       <input
         type="text"
         placeholder="쿠폰 코드"
         value={newCoupon.code}
-        onChange={e => setNewCoupon({ ...newCoupon, code: e.target.value })}
+        onChange={e => hanldeChangeCouponInfo("code", e.target.value)}
         className="w-full p-2 border rounded"
       />
       <div className="flex gap-2">
         <select
           value={newCoupon.discountType}
           onChange={e =>
-            setNewCoupon({
-              ...newCoupon,
-              discountType: e.target.value as "amount" | "percentage",
-            })
+            hanldeChangeCouponInfo("discountType", e.target.value as "amount" | "percentage")
           }
           className="w-full p-2 border rounded"
         >
@@ -57,7 +40,7 @@ const AddCoupon = ({ onCouponAdd }: AddCouponProps) => {
           type="number"
           placeholder="할인 값"
           value={newCoupon.discountValue}
-          onChange={e => setNewCoupon({ ...newCoupon, discountValue: parseInt(e.target.value) })}
+          onChange={e => hanldeChangeCouponInfo("discountValue", parseInt(e.target.value))}
           className="w-full p-2 border rounded"
         />
       </div>
